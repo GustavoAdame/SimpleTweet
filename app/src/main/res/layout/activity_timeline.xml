@@ -4,18 +4,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@android:color/black"
     android:layout_height="match_parent"
     tools:context=".activities.TimelineActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="3dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTweets"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTweets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@color/twitter_blue"
+        android:minHeight="?attr/actionBarSize"
+        android:textAlignment="center"
+        app:menu="@menu/menu_main"
+        app:navigationIcon="@drawable/ic_launcher_twitter_round"
+        app:titleTextColor="@android:color/white" />
+
 </RelativeLayout>

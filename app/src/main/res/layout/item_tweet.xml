@@ -20,6 +20,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:text="trump123" />
 
@@ -30,6 +32,7 @@
         android:layout_below="@+id/tvScreenName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
+        android:textColor="@android:color/white"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView"
         tools:text="MAGA" />
@@ -54,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:textColor="@android:color/white"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvScreenName" />

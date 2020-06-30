@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@android:color/black"
     android:layout_height="match_parent"
     tools:context=".activities.ComposeActivity">
 
@@ -13,8 +14,7 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="280"
-        app:counterTextAppearance="@android:color/black"
-        app:counterOverflowTextAppearance="@android:color/black">
+        app:counterTextColor="@android:color/white">
 
         <EditText
             android:id="@+id/etCompose"
@@ -23,12 +23,11 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:ems="10"
-            android:gravity="start|top"
+            android:textColor="@android:color/white"
+            android:gravity="top"
             android:hint="@string/what_s_happening"
             android:inputType="textMultiLine"
             android:minLines="5" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -39,6 +38,8 @@
         android:layout_below="@+id/etContainer"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
+        android:background="@color/twitter_blue"
         android:layout_marginEnd="5dp"
+        android:textColor="@android:color/white"
         android:text="@string/tweet" />
 </RelativeLayout>
