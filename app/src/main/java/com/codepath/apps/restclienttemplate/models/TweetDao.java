@@ -9,7 +9,7 @@ import java.util.List;
 
 @Dao
 public interface TweetDao {
-    @Query("SELECT Tweet.body AS tweet_body, Tweet.createdAt AS tweet_createdAt, Tweet.id AS tweet_id, User.* " +
+    @Query("SELECT Tweet.body AS tweet_body, Tweet.ImageURL AS tweet_ImageURL, Tweet.createdAt AS tweet_createdAt, Tweet.id AS tweet_id, User.* " +
             "FROM Tweet INNER JOIN User ON Tweet.userID = User.id ORDER BY Tweet.createdAt DESC LIMIT 50")
     List<TweetWithUser> recentItems();
 

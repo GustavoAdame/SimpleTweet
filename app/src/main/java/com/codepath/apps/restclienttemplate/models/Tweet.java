@@ -1,5 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import android.text.format.DateUtils;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -11,8 +13,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Parcel
 @Entity(foreignKeys = @ForeignKey(entity=User.class, parentColumns="id", childColumns="userID"))
@@ -30,6 +35,9 @@ public class Tweet {
     @ColumnInfo
     public long userID;
 
+    @ColumnInfo
+    public String ImageURL;
+
     @Ignore /* Foreign Key to User Table */
     public User user;
 
@@ -39,6 +47,15 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
+
+        try{
+            JSONObject entities = jsonObject.getJSONObject("entities");
+            JSONArray media = entities.getJSONArray("media");
+            JSONObject media_First = media.getJSONObject(0);
+            tweet.ImageURL = media_First.getString("media_url_https");
+        } catch (JSONException e){
+            tweet.ImageURL = "No Image";
+        }
 
         User user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.user = user;
@@ -53,4 +70,5 @@ public class Tweet {
         }
         return tweets;
     }
+
 }

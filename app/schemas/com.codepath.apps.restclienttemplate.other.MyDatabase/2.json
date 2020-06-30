@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f7521790115cf27ef2ea03de3cbba32b",
+    "identityHash": "cc3a883acf38bfdde60ec4eadbd0c036",
     "entities": [
       {
         "tableName": "SampleModel",
@@ -82,7 +82,7 @@
       },
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `screenName` TEXT, `profileImageURL` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `screenName` TEXT, `profileImageURL` TEXT, `ImageURL` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -107,6 +107,12 @@
             "columnName": "profileImageURL",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "ImageURL",
+            "columnName": "ImageURL",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -122,7 +128,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f7521790115cf27ef2ea03de3cbba32b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc3a883acf38bfdde60ec4eadbd0c036')"
     ]
   }
 }

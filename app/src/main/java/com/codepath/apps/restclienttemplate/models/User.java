@@ -28,6 +28,7 @@ public class User {
     @ColumnInfo
     public String profileImageURL;
 
+
     public static User fromJson(JSONObject jsonObject) throws JSONException {
         User user = new User();
         user.name = jsonObject.getString("name");
