@@ -11,12 +11,11 @@ import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
-import com.codepath.apps.restclienttemplate.other.TwitterApp;
-import com.codepath.apps.restclienttemplate.other.TwitterClient;
+import com.codepath.apps.restclienttemplate.app.TwitterApp;
+import com.codepath.apps.restclienttemplate.app.TwitterClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import okhttp3.Headers;
@@ -44,12 +43,12 @@ public class ComposeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String tweetContent = etCompose.getText().toString();
                 if(tweetContent.isEmpty()){
-                    Toast.makeText(ComposeActivity.this, "Sorry, no empty tweet allowed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ComposeActivity.this, "Can't Send Empty Tweet", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if(tweetContent.length() > MAX_TWEET_LENGTH){
-                    Toast.makeText(ComposeActivity.this, "Sorry, tweet to long", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ComposeActivity.this, "Exceed Character Limit", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -59,7 +58,6 @@ public class ComposeActivity extends AppCompatActivity {
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
-                            Toast.makeText(ComposeActivity.this, "Tweet Posted!", Toast.LENGTH_LONG).show();
                             Intent i = new Intent();
                             i.putExtra("tweet", Parcels.wrap(tweet));
                             /* Set result code and bundle data for response */

@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.other;
+package com.codepath.apps.restclienttemplate.listener;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;

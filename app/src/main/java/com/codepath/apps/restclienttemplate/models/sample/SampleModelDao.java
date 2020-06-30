@@ -1,9 +1,11 @@
-package com.codepath.apps.restclienttemplate.models;
+package com.codepath.apps.restclienttemplate.models.sample;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.codepath.apps.restclienttemplate.models.sample.SampleModel;
 
 import java.util.List;
 

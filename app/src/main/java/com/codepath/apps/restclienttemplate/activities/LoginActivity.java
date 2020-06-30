@@ -7,10 +7,10 @@ import android.view.Menu;
 import android.view.View;
 
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.other.TwitterApp;
-import com.codepath.apps.restclienttemplate.other.TwitterClient;
-import com.codepath.apps.restclienttemplate.models.SampleModel;
-import com.codepath.apps.restclienttemplate.models.SampleModelDao;
+import com.codepath.apps.restclienttemplate.app.TwitterApp;
+import com.codepath.apps.restclienttemplate.app.TwitterClient;
+import com.codepath.apps.restclienttemplate.models.sample.SampleModel;
+import com.codepath.apps.restclienttemplate.models.sample.SampleModelDao;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {

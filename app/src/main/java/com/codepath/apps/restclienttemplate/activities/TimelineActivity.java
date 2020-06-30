@@ -10,32 +10,26 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.TweetDao;
 import com.codepath.apps.restclienttemplate.models.TweetWithUser;
 import com.codepath.apps.restclienttemplate.models.User;
-import com.codepath.apps.restclienttemplate.other.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.restclienttemplate.listener.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.other.TwitterApp;
-import com.codepath.apps.restclienttemplate.other.TwitterClient;
+import com.codepath.apps.restclienttemplate.app.TwitterApp;
+import com.codepath.apps.restclienttemplate.app.TwitterClient;
 import com.codepath.apps.restclienttemplate.adapters.TweetsAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import okhttp3.Headers;
 

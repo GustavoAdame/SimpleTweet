@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.models;
+package com.codepath.apps.restclienttemplate.models.sample;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

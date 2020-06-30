@@ -79,6 +79,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public TextView tvScreenName;
         public ImageView ivImage;
         public TextView tvTimeStamp;
+        public TextView tvHandle;
         /* itemView is aka a single tweet */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,11 +88,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
+            tvHandle = itemView.findViewById(R.id.tvHandle);
         }
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+            tvHandle.setText(" @" + tweet.user.screenName);
             tvTimeStamp.setText("· " + getRelativeTimeAgo(tweet.createdAt));
 
             int radius = 100; // corner radius, higher value = more rounded
