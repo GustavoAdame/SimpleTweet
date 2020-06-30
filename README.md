@@ -48,10 +48,9 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 <p align="center">
  
-   <img width=“50%” height="900" src="SimpleTweet.gif">
+   <img width=“60%” height="700" src="SimpleTweet.gif">
    <br> Required & Optional Features <br> <br> 
-   
-   GIF created with [Kap](https://getkap.co/).
+    GIF created with [Kap](https://getkap.co/).
 </p>
 
 ## Notes
