@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginRight="6dip"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
