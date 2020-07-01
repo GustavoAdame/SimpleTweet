@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -38,6 +39,12 @@ public class Tweet {
     @ColumnInfo
     public String ImageURL;
 
+    @ColumnInfo
+    public int retweetCount;
+
+    @ColumnInfo
+    public int favoriteCount;
+
     @Ignore /* Foreign Key to User Table */
     public User user;
 
@@ -47,6 +54,10 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
+        tweet.retweetCount = jsonObject.getInt("retweet_count");
+        Log.d("Gustavo", "retweet_count: " + tweet.retweetCount);
+        tweet.favoriteCount = jsonObject.getInt("favorite_count");
+        Log.d("Gustavo", "favorite_count: " + tweet.favoriteCount);
 
         try{
             JSONObject entities = jsonObject.getJSONObject("entities");

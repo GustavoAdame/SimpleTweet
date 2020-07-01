@@ -26,31 +26,15 @@
         tools:text="trump123" />
 
     <TextView
-        android:id="@+id/tvBody"
+        android:id="@+id/tvHandle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_alignParentTop="true"
         android:textColor="@android:color/white"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="TextView"
-        tools:text="MAGA" />
-
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_below="@+id/tvBody"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="6dip"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvScreenName"
+        android:text="Handle" />
 
     <TextView
         android:id="@+id/tvTimeStamp"
@@ -65,22 +49,39 @@
         android:textColor="@android:color/white" />
 
     <TextView
-        android:id="@+id/tvHandle"
+        android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textColor="@android:color/white"
+        android:layout_below="@+id/tvScreenName"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvScreenName"
-        android:text="Handle" />
+        android:layout_marginTop="2dp"
+        android:textColor="@android:color/white"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:text="TextView"
+        tools:text="MAGA" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="6dip"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
+
 
     <LinearLayout
         android:layout_below="@+id/ivImage"
         android:layout_alignStart="@+id/tvScreenName"
         android:orientation="horizontal"
+        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
         android:layout_height="wrap_content" >
 
         <ImageView
@@ -88,26 +89,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:layout_gravity="left"
-            app:srcCompat="@drawable/vector_compose_dm_fab" />
+            app:srcCompat="@drawable/vector_compose_dm_fab"/>
 
         <ImageView
-            android:id="@+id/ivReply"
+            android:id="@+id/ivRetweet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tint="@android:color/white"
             android:layout_weight="1"
             android:layout_marginLeft="50dp"
-            app:srcCompat="@drawable/ic_vector_retweet" />
+            app:srcCompat="@drawable/ic_vector_retweet"/>
+
+        <TextView
+            android:id="@+id/tvRetweetCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.000001"
+            android:textColor="@android:color/white"
+            android:text="231" />
 
         <ImageView
-            android:id="@+id/ivFavorites"
+            android:id="@+id/ivLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:tint="@android:color/white"
-            app:srcCompat="@drawable/ic_vector_heart_stroke" />
+            app:srcCompat="@drawable/ic_vector_heart_stroke"/>
 
+        <TextView
+            android:id="@+id/tvLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.000001"
+            android:textColor="@android:color/white"
+            android:text="132" />
     </LinearLayout>
 
 </RelativeLayout>

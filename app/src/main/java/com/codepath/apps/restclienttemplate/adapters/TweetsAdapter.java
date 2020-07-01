@@ -80,6 +80,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public ImageView ivImage;
         public TextView tvTimeStamp;
         public TextView tvHandle;
+        public TextView tvRetweetCount;
+        public TextView tvLikeCount;
+        public ImageView ivLike;
+        public ImageView ivRetweet;
+
         /* itemView is aka a single tweet */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,13 +94,23 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivImage = itemView.findViewById(R.id.ivImage);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
             tvHandle = itemView.findViewById(R.id.tvHandle);
+            tvRetweetCount = itemView.findViewById(R.id.tvRetweetCount);
+            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
+            ivRetweet = itemView.findViewById(R.id.ivRetweet);
+            ivLike = itemView.findViewById(R.id.ivLike);
+            ivRetweet = itemView.findViewById(R.id.ivRetweet);
         }
+
+
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
-            tvHandle.setText(" @" + tweet.user.screenName);
+            tvHandle.setText("@" + tweet.user.screenName);
             tvTimeStamp.setText("· " + getRelativeTimeAgo(tweet.createdAt));
+
+            tvRetweetCount.setText(String.valueOf(tweet.retweetCount));
+            tvLikeCount.setText(String.valueOf(tweet.favoriteCount));
 
             int radius = 100; // corner radius, higher value = more rounded
             Glide.with(context).load(tweet.user.profileImageURL).transform(new RoundedCorners(radius)).override(Target.SIZE_ORIGINAL, 120).into(ivProfileImage);
