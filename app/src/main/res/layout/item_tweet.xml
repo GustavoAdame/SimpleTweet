@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:background="@android:color/black">
 
     <ImageView
         android:id="@+id/ivProfileImage"
@@ -30,11 +31,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:textColor="@android:color/white"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvScreenName"
-        android:text="Handle" />
+        android:text="Handle"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/tvTimeStamp"
@@ -55,9 +56,9 @@
         android:layout_below="@+id/tvScreenName"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
-        android:textColor="@android:color/white"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView"
+        android:textColor="@android:color/white"
         tools:text="MAGA" />
 
     <ImageView
@@ -77,54 +78,53 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
+        android:gravity="center"
         android:layout_alignStart="@+id/tvScreenName"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/ivComment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:layout_gravity="left"
-            app:srcCompat="@drawable/vector_compose_dm_fab"/>
+            android:src="@drawable/vector_compose_dm_fab"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/ivRetweet"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginLeft="70dp"
             android:layout_height="wrap_content"
-            android:tint="@android:color/white"
             android:layout_weight="1"
-            android:layout_marginLeft="50dp"
-            app:srcCompat="@drawable/ic_vector_retweet"/>
+            android:src="@drawable/ic_vector_retweet_stroke"/>
 
         <TextView
             android:id="@+id/tvRetweetCount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.000001"
-            android:textColor="@android:color/white"
-            android:text="231" />
+            android:layout_weight="1"
+            android:text="231"
+            android:textColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/ivLike"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:tint="@android:color/white"
-            app:srcCompat="@drawable/ic_vector_heart_stroke"/>
+            android:src="@drawable/ic_vector_heart_stroke" />
 
         <TextView
             android:id="@+id/tvLikeCount"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.000001"
-            android:textColor="@android:color/white"
-            android:text="132" />
+            android:layout_weight="1"
+            android:text="132"
+            android:textColor="@android:color/white" />
+
     </LinearLayout>
 
 </RelativeLayout>

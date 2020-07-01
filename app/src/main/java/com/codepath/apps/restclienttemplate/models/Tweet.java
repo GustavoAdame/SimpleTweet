@@ -45,6 +45,12 @@ public class Tweet {
     @ColumnInfo
     public int favoriteCount;
 
+    @Ignore
+    public boolean isFavorite;
+
+    @Ignore
+    public boolean isRetweet;
+
     @Ignore /* Foreign Key to User Table */
     public User user;
 
@@ -55,9 +61,9 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.id = jsonObject.getLong("id");
         tweet.retweetCount = jsonObject.getInt("retweet_count");
-        Log.d("Gustavo", "retweet_count: " + tweet.retweetCount);
         tweet.favoriteCount = jsonObject.getInt("favorite_count");
-        Log.d("Gustavo", "favorite_count: " + tweet.favoriteCount);
+        tweet.isFavorite = jsonObject.getBoolean("favorited");
+        tweet.isRetweet = jsonObject.getBoolean("retweeted");
 
         try{
             JSONObject entities = jsonObject.getJSONObject("entities");

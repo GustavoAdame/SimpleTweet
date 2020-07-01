@@ -117,7 +117,6 @@ public class TimelineActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         /*  Handle presses on the action bar items */
