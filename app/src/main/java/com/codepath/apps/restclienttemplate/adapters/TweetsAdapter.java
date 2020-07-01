@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -18,8 +19,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.activities.ReplyActivity;
 import com.codepath.apps.restclienttemplate.app.TwitterClient;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.TweetDao;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import java.text.ParseException;
@@ -29,6 +32,8 @@ import java.util.Locale;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.Headers;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
 
@@ -86,6 +91,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public TextView tvHandle;
         public TextView tvRetweetCount;
         public TextView tvLikeCount;
+        public ImageView ivComment;
         public ImageView ivLike;
         public ImageView ivRetweet;
 
@@ -100,7 +106,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvHandle = itemView.findViewById(R.id.tvHandle);
             tvRetweetCount = itemView.findViewById(R.id.tvRetweetCount);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
-
+            ivComment = itemView.findViewById(R.id.ivComment);
             ivRetweet = itemView.findViewById(R.id.ivRetweet);
             ivLike = itemView.findViewById(R.id.ivLike);
         }
@@ -113,6 +119,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             tvRetweetCount.setText(String.valueOf(tweet.retweetCount));
             tvLikeCount.setText(String.valueOf(tweet.favoriteCount));
+
+
+            ivComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ReplyActivity.class);
+                    i.putExtra("handle", "@"+tweet.user.screenName);
+                    context.startActivity(i);
+                }
+            });
 
 
             if(tweet.isFavorite == true){

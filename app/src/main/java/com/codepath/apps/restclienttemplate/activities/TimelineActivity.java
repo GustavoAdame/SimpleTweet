@@ -45,6 +45,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     /* REQUEST_CODE */
     private final int REQUEST_CODE = 200;
+    private final int REQUEST_CODE2 = 201;
     private List<Tweet> tweetsFromDB;
 
     @Override
@@ -142,6 +143,18 @@ public class TimelineActivity extends AppCompatActivity {
                  /* Modify data source */
             tweets.add(0, tweetStatus);
                 /* Update the adapter */
+            tweetsAdapter.notifyItemInserted(0);
+            rvTweets.smoothScrollToPosition(0);
+        }
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE2) {
+            /* Get data from intent (Compose) */
+            Tweet tweetStatus = Parcels.unwrap(data.getParcelableExtra("reply"));
+
+            /* Update RecyclerView with new tweet */
+            /* Modify data source */
+            tweets.add(0, tweetStatus);
+            /* Update the adapter */
             tweetsAdapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
         }
