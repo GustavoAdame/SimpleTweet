@@ -28,7 +28,7 @@ public class User {
     @ColumnInfo
     public String profileImageURL;
 
-
+    /* This method parse JSON from Twitter API to bind data to relevant fields*/
     public static User fromJson(JSONObject jsonObject) throws JSONException {
         User user = new User();
         user.name = jsonObject.getString("name");
@@ -38,12 +38,12 @@ public class User {
         return user;
     }
 
+    /*  This method is used to store and retrieve a List of User objects */
     public static List<User> fromJsonTweetArray(List<Tweet> tweetsFromNetwork) {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < tweetsFromNetwork.size() ; i++) {
             users.add(tweetsFromNetwork.get(i).user);
         }
-
         return  users;
     }
 }

@@ -7,6 +7,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+/* Implementation of Room : Google's persistence library - querying */
 @Dao
 public interface TweetDao {
     @Query("SELECT Tweet.body AS tweet_body, Tweet.ImageURL AS tweet_ImageURL, Tweet.createdAt AS tweet_createdAt, Tweet.id AS tweet_id, User.* " +

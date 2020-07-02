@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.models.TweetDao;
 import com.codepath.apps.restclienttemplate.models.TweetWithUser;
 import com.codepath.apps.restclienttemplate.models.User;
@@ -34,52 +35,52 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
-    /* Global Variables */
-    public TwitterClient client;
+    /* Listener reference variables */
+    public SwipeRefreshLayout swipeContainer;
+    public EndlessRecyclerViewScrollListener scrollListener;
+
+    /* Data structures reference variables */
     public List<Tweet> tweets;
     public RecyclerView rvTweets;
     public TweetsAdapter tweetsAdapter;
-    public SwipeRefreshLayout swipeContainer;
-    public EndlessRecyclerViewScrollListener scrollListener;
+    private List<Tweet> tweetsFromDB;
+
+    /* Class references */
+    public TwitterClient client;
     public TweetDao tweetDao;
 
     /* REQUEST_CODE */
-    private final int REQUEST_CODE = 200;
-    private final int REQUEST_CODE2 = 201;
-    private List<Tweet> tweetsFromDB;
+    private final int REQUEST_CODE = 200;  /* User sending a tweet */
+    private final int REQUEST_CODE2 = 201; /* User replying to  a tweet */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+        /* Initalizing Global Variables */
         client = TwitterApp.getRestClient(this);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         swipeContainer = findViewById(R.id.swipeContainer);
-
+        rvTweets = findViewById(R.id.rvTweets);
         tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().tweetModelDao();
 
         /* Configure the refreshing colors */
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        swipeContainer.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                populateHomeTimeline();
-            }
+            public void onRefresh() { populateHomeTimeline();}
         });
 
-        /* Get the recyclerView */
-        rvTweets = findViewById(R.id.rvTweets);
         /* Initialize the list of tweets and adapter */
         tweets = new ArrayList<>();
         tweetsAdapter = new TweetsAdapter(this, tweets);
 
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
+        /* Sets the Toolbar to act as the ActionBar for this Activity window. */
         setSupportActionBar(toolbar);
 
         /* Setup: layout manager and the adapter */
@@ -89,14 +90,13 @@ public class TimelineActivity extends AppCompatActivity {
 
         scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadMoreData();
-            }
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) { loadMoreData();}
         };
+
         /* Adds the scroll listener to RecyclerView */
         rvTweets.addOnScrollListener(scrollListener);
 
-
+        /* Update timelines with lastest tweets on a seperate thread */
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -108,6 +108,7 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+        /* Network request for user timeline */
         populateHomeTimeline();
     }
 
@@ -129,78 +130,83 @@ public class TimelineActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /* handle the result of the child-activity */
+    /* Handle the result of the child-activity */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         /* REQUEST_CODE is defined above */
         super.onActivityResult(requestCode, resultCode, data);
 
+        /* Tweeting */
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             /* Get data from intent (Compose) */
             Tweet tweetStatus = Parcels.unwrap(data.getParcelableExtra("tweet"));
 
-            /* Update RecyclerView with new tweet */
-                 /* Modify data source */
+            /* Update RecyclerView with new tweet - Modify data source */
             tweets.add(0, tweetStatus);
-                /* Update the adapter */
+
+            /* Update the adapter */
             tweetsAdapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
         }
 
+        /* Replying */
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE2) {
             /* Get data from intent (Compose) */
             Tweet tweetStatus = Parcels.unwrap(data.getParcelableExtra("reply"));
 
-            /* Update RecyclerView with new tweet */
-            /* Modify data source */
+            /* Update RecyclerView with new tweet - Modify data source */
             tweets.add(0, tweetStatus);
+
             /* Update the adapter */
             tweetsAdapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
         }
     }
 
+    /* Uses a certain endpoint from the API */
     private void loadMoreData() {
         /* Send an API request to retrieve appropriate paginated data */
-        client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+        client.getNextPageOfTweets(tweets.get(tweets.size()-1).id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 /* Deserialize and construct new model objects from the API response */
                 JSONArray jsonArray = json.jsonArray;
                 try {
                     List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
+
                     /* Append the new data objects to the existing set of items inside the array of items */
-                    /* Notify the adapter of the new items made with `notifyItemRangeInserted()` */
                     tweetsAdapter.addAll(tweets);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
             @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
-            }
-        }, tweets.get(tweets.size()-1).id);
-
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {}
+        });
     }
 
+    /* Uses a certain endpoint from the API */
     private void populateHomeTimeline() {
         client.getHomeTimelne(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONArray jsonArray = json.jsonArray;
                 try {
+
                     final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
                     tweetsAdapter.clear();
-                   tweetsAdapter.addAll(tweetsFromNetwork);
+                    tweetsAdapter.addAll(tweetsFromNetwork);
+
                     /* Now we call setRefreshing(false) to signal refresh has finished */
                     swipeContainer.setRefreshing(false);
+
+                    /* Update timelines with lastest tweets on a seperate thread */
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {
                             List<User> usersFromNetwork = User.fromJsonTweetArray(tweetsFromNetwork);
                             tweetDao.insertModel(usersFromNetwork.toArray(new User[0]));
-                          tweetDao.insertModel(tweetsFromNetwork.toArray(new Tweet[0]));
+                            tweetDao.insertModel(tweetsFromNetwork.toArray(new Tweet[0]));
                         }
                     });
 

@@ -22,7 +22,7 @@ import org.parceler.Parcels;
 import okhttp3.Headers;
 
 public class ReplyActivity extends AppCompatActivity {
-    /* Global Variables */
+    /* XML View references */
     public EditText etReply;
     public Button btnReply;
     public TwitterClient client;
@@ -32,26 +32,33 @@ public class ReplyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reply);
 
+        /* Initalizing Global Variables */
         client = TwitterApp.getRestClient(this);
         etReply = findViewById(R.id.etReply);
         btnReply = findViewById(R.id.btnReply);
 
+        /* Autofill reply with tweet handle */
         etReply.setText("Replying to " + getIntent().getStringExtra("handle")+"\n");
+
+        /* Button: Reply --> OnClickListener */
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /* User actual tweet body */
                 String tweetContent = etReply.getText().toString();
 
                 /* Make a API call to Twitter to publish Tweet */
-                client.publishTweet(new JsonHttpResponseHandler() {
+                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Intent i = new Intent();
                             i.putExtra("reply", Parcels.wrap(tweet));
+
                             /* Set result code and bundle data for response */
                             setResult(RESULT_OK, i);
+
                             /* Closes the activity, pass data to parent */
                             finish();
                         } catch (JSONException e) {
@@ -60,12 +67,9 @@ public class ReplyActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
-                    }
-                }, tweetContent);
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {}
+                });
             }
         });
     }
-
 }

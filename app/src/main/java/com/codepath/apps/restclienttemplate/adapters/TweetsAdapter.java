@@ -40,7 +40,7 @@ import okhttp3.Headers;
 import static androidx.core.content.ContextCompat.startActivity;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
-
+    /* Data structure references */
     public Context context;
     public List<Tweet> tweets;
 
@@ -87,6 +87,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     /* Define a viewholder */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        /* XML View references */
         public ImageView ivProfileImage;
         public TextView tvBody;
         public TextView tvScreenName;
@@ -102,6 +103,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         /* itemView is aka a single tweet */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            /* Inflate our Views*/
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
@@ -113,19 +116,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivComment = itemView.findViewById(R.id.ivComment);
             ivRetweet = itemView.findViewById(R.id.ivRetweet);
             ivLike = itemView.findViewById(R.id.ivLike);
+
+            /* Click on row to launch intent */
             itemView.setOnClickListener(this);
         }
 
         public void bind(final Tweet tweet) {
+            /* Binding data into our views */
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             tvHandle.setText("@" + tweet.user.screenName);
             tvTimeStamp.setText("· " + getRelativeTimeAgo(tweet.createdAt));
-
             tvRetweetCount.setText(String.valueOf(tweet.retweetCount));
             tvLikeCount.setText(String.valueOf(tweet.favoriteCount));
 
-
+            /* Icon: Comment --> onClick to ReplyActivity */
             ivComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -135,26 +140,29 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 }
             });
 
-
+            /* Detemine Icon depending on different states to get UI feedback */
             if(tweet.isFavorite == true){
                 ivLike.setImageResource(R.drawable.ic_vector_heart);
             } else{
                 ivLike.setImageResource(R.drawable.ic_vector_heart_stroke);
             }
 
+            /* Detemine Icon depending on different states to get UI feedback */
             if(tweet.isRetweet == true){
                 ivRetweet.setImageResource(R.drawable.ic_vector_retweet);
             } else{
                 ivRetweet.setImageResource(R.drawable.ic_vector_retweet_stroke);
             }
 
-
+            /* Set up client */
             final TwitterClient client = new TwitterClient(context);
+
             ivRetweet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(tweet.isRetweet){
-                        client.retweetTweet(new JsonHttpResponseHandler() {
+                        /* Operation string - unretweet is based on Twitter API parameter */
+                        client.retweetTweet(tweet.id, "unretweet", new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 ivRetweet.setImageResource(R.drawable.ic_vector_retweet_stroke);
@@ -163,12 +171,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             }
 
                             @Override
-                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
-                            }
-                        }, tweet.id, "unretweet");
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {}
+                        });
                     } else{
-                        client.retweetTweet(new JsonHttpResponseHandler() {
+                        /* Operation string - retweet is based on Twitter API parameter */
+                        client.retweetTweet(tweet.id, "retweet", new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 ivRetweet.setImageResource(R.drawable.ic_vector_retweet);
@@ -177,13 +184,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             }
 
                             @Override
-                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
-                            }
-                        }, tweet.id, "retweet");
-
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {}
+                        });
                     }
-
                 }
             });
 
@@ -191,7 +194,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     if(tweet.isFavorite){
-                        client.favoriteTweet(new JsonHttpResponseHandler() {
+                        /* Operation string - destroy is based on Twitter API parameter */
+                        client.favoriteTweet(tweet.id, "destroy", new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 ivLike.setImageResource(R.drawable.ic_vector_heart_stroke);
@@ -203,9 +207,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
 
                             }
-                        }, tweet.id, "destroy");
+                        });
                     } else{
-                        client.favoriteTweet(new JsonHttpResponseHandler() {
+                        client.favoriteTweet(tweet.id, "create", new JsonHttpResponseHandler() {
+                            /* Operation string - create is based on Twitter API parameter */
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 ivLike.setImageResource(R.drawable.ic_vector_heart);
@@ -217,30 +222,33 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
 
                             }
-                        }, tweet.id, "create");
-
+                        });
                     }
-
                 }
             });
 
-            int radius = 100; // corner radius, higher value = more rounded
-            Glide.with(context).load(tweet.user.profileImageURL).transform(new RoundedCorners(radius)).override(Target.SIZE_ORIGINAL, 120).into(ivProfileImage);
+            int radius = 100;
+            /* Get Profile image to display on Timeline */
+            Glide.with(context).load(tweet.user.profileImageURL).
+                    transform(new RoundedCorners(radius)).override(Target.SIZE_ORIGINAL, 120).into(ivProfileImage);
 
+            /* If tweet have a image --> get display ImageView with data */
             if(!tweet.ImageURL.equals("No Image")){
                 ivImage.setVisibility(View.VISIBLE);
+                /* Get tweet media image to display on TweetDetails */
                 Glide.with(context).load(tweet.ImageURL).into(ivImage);
-            } else{
+            }
+            /* Else remove Imageview */
+            else{
                 ivImage.setVisibility(View.GONE);
             }
 
         }
 
+        /* Actually implementation of the onClick for recycler view */
         @Override
         public void onClick(View view) {
-
             int position = getAdapterPosition();
-            // make sure the position is valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION) {
                 Tweet tweet = tweets.get(position);
                 Intent intent = new Intent(context, TweetDetailsActivity.class);
@@ -251,6 +259,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         }
     }
 
+    /* Helper method to format the timestamp */
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);

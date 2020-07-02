@@ -5,6 +5,7 @@ import androidx.room.Embedded;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Implementation of Room : Google's persistence library */
 public class TweetWithUser {
     /* @Embedded notation flattens the properties of the User object into the object, preserving encapsulation */
     @Embedded

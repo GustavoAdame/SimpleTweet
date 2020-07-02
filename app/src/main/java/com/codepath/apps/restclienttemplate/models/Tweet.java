@@ -54,7 +54,7 @@ public class Tweet {
     @Ignore /* Foreign Key to User Table */
     public User user;
 
-
+    /* This method parse JSON from Twitter API to bind data to relevant fields*/
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
         tweet.body = jsonObject.getString("text");
@@ -80,6 +80,7 @@ public class Tweet {
         return tweet;
     }
 
+    /* This method is used to store and retrieve a List of Tweet objects */
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.databinding.ActivityComposeBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.app.TwitterApp;
 import com.codepath.apps.restclienttemplate.app.TwitterClient;
@@ -21,11 +22,12 @@ import org.parceler.Parcels;
 import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
-
-    /* Global Variables */
+    /* Global variables */
     public static final int MAX_TWEET_LENGTH = 280;
+    /* Views references */
     public EditText etCompose;
     public Button btnTweet;
+    /* Class references */
     public TwitterClient client;
 
     @Override
@@ -33,11 +35,12 @@ public class ComposeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
+        /* Initalizing Global Variables */
         client = TwitterApp.getRestClient(this);
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
 
-        /* Set a button onClick listener */
+        /* Button: Tweet -> onClickListener */
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,15 +56,17 @@ public class ComposeActivity extends AppCompatActivity {
                 }
 
                 /* Make a API call to Twitter to publish Tweet */
-                client.publishTweet(new JsonHttpResponseHandler() {
+                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         try {
                             Tweet tweet = Tweet.fromJson(json.jsonObject);
                             Intent i = new Intent();
                             i.putExtra("tweet", Parcels.wrap(tweet));
+
                             /* Set result code and bundle data for response */
                             setResult(RESULT_OK, i);
+
                             /* Closes the activity, pass data to parent */
                             finish();
                         } catch (JSONException e) {
@@ -70,14 +75,9 @@ public class ComposeActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
-                    }
-                }, tweetContent);
+                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {}
+                });
             }
         });
-
-
-
     }
 }

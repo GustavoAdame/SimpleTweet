@@ -56,7 +56,7 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
-	public void getNextPageOfTweets(JsonHttpResponseHandler handler, long maxID) {
+	public void getNextPageOfTweets(long maxID, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
@@ -65,7 +65,7 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
-	public void publishTweet(JsonHttpResponseHandler handler, String tweetContent) {
+	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
@@ -73,7 +73,7 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, "", handler);
 	}
 
-	public void favoriteTweet(JsonHttpResponseHandler handler, long tweetID, String operation) {
+	public void favoriteTweet(long tweetID, String operation, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("favorites/" + operation + ".json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
@@ -81,7 +81,7 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, "", handler);
 	}
 
-	public void retweetTweet(JsonHttpResponseHandler handler, long tweetID, String operation) {
+	public void retweetTweet(long tweetID, String operation, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/" + operation + "/" + tweetID + ".json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
