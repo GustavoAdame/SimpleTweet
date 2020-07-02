@@ -22,50 +22,50 @@ import okhttp3.Headers;
 
 public class TweetDetailsActivity extends AppCompatActivity {
     public static Tweet tweet;
-    public ImageView ivProfileImage;
-    public TextView tvBody;
-    public TextView tvScreenName;
-    public ImageView ivImage;
-    public TextView tvHandle;
-    public TextView tvRetweetCount;
-    public TextView tvLikeCount;
-    public TextView tvRetweetText;
-    public TextView tvLikeText;
-    public ImageView ivComment;
-    public ImageView ivLike;
-    public ImageView ivRetweet;
+    public ImageView ivProfileImage2;
+    public TextView tvBody2;
+    public TextView tvScreenName2;
+    public ImageView ivImage2;
+    public TextView tvHandle2;
+    public TextView tvRetweetCount2;
+    public TextView tvLikeCount2;
+    public TextView tvRetweetText2;
+    public TextView tvLikeText2;
+    public ImageView ivComment2;
+    public ImageView ivLike2;
+    public ImageView ivRetweet2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_details);
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
-        ivProfileImage = findViewById(R.id.ivProfileImage);
-        tvScreenName = findViewById(R.id.tvScreenName);
-        tvBody = findViewById(R.id.tvBody);
-        ivImage = findViewById(R.id.ivImage);
-        tvHandle = findViewById(R.id.tvHandle);
-        tvRetweetCount = findViewById(R.id.tvRetweetCount);
-        tvLikeCount = findViewById(R.id.tvLikeCount);
-        tvRetweetText = findViewById(R.id.tvRetweetText);
-        tvLikeText = findViewById(R.id.tvLikeText);
-        ivComment = findViewById(R.id.ivComment);
-        ivLike = findViewById(R.id.ivLike);
-        ivRetweet = findViewById(R.id.ivRetweet);
+        ivProfileImage2 = findViewById(R.id.ivProfileImage2);
+        tvScreenName2 = findViewById(R.id.tvScreenName2);
+        tvBody2 = findViewById(R.id.tvBody2);
+        ivImage2 = findViewById(R.id.ivImage2);
+        tvHandle2 = findViewById(R.id.tvHandle2);
+        tvRetweetCount2 = findViewById(R.id.tvRetweetCount2);
+        tvLikeCount2 = findViewById(R.id.tvLikeCount2);
+        tvRetweetText2 = findViewById(R.id.tvRetweetText2);
+        tvLikeText2 = findViewById(R.id.tvLikeText2);
+        ivComment2 = findViewById(R.id.ivComment2);
+        ivLike2 = findViewById(R.id.ivLike2);
+        ivRetweet2 = findViewById(R.id.ivRetweet2);
         bindAssets();
 
     }
 
     public void bindAssets(){
-        tvBody.setText(tweet.body);
-        tvScreenName.setText(tweet.user.screenName);
-        tvHandle.setText("@" + tweet.user.screenName);
+        tvBody2.setText(tweet.body);
+        tvScreenName2.setText(tweet.user.screenName);
+        tvHandle2.setText("@" + tweet.user.screenName);
 
-        tvRetweetCount.setText(String.valueOf(tweet.retweetCount));
-        tvLikeCount.setText(String.valueOf(tweet.favoriteCount));
+        tvRetweetCount2.setText(String.valueOf(tweet.retweetCount));
+        tvLikeCount2.setText(String.valueOf(tweet.favoriteCount));
 
 
-        ivComment.setOnClickListener(new View.OnClickListener() {
+        ivComment2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(TweetDetailsActivity.this, ReplyActivity.class);
@@ -76,29 +76,29 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
 
         if(tweet.isFavorite == true){
-            ivLike.setImageResource(R.drawable.ic_vector_heart);
+            ivLike2.setImageResource(R.drawable.ic_vector_heart);
         } else{
-            ivLike.setImageResource(R.drawable.ic_vector_heart_stroke);
+            ivLike2.setImageResource(R.drawable.ic_vector_heart_stroke);
         }
 
         if(tweet.isRetweet == true){
-            ivRetweet.setImageResource(R.drawable.ic_vector_retweet);
+            ivRetweet2.setImageResource(R.drawable.ic_vector_retweet);
         } else{
-            ivRetweet.setImageResource(R.drawable.ic_vector_retweet_stroke);
+            ivRetweet2.setImageResource(R.drawable.ic_vector_retweet_stroke);
         }
 
 
         final TwitterClient client = new TwitterClient(TweetDetailsActivity.this);
-        ivRetweet.setOnClickListener(new View.OnClickListener() {
+        ivRetweet2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(tweet.isRetweet){
                     client.retweetTweet(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            ivRetweet.setImageResource(R.drawable.ic_vector_retweet_stroke);
+                            ivRetweet2.setImageResource(R.drawable.ic_vector_retweet_stroke);
                             tweet.isRetweet = false;
-                            tvRetweetCount.setText(String.valueOf(tweet.retweetCount));
+                            tvRetweetCount2.setText(String.valueOf(tweet.retweetCount));
                         }
 
                         @Override
@@ -110,9 +110,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     client.retweetTweet(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            ivRetweet.setImageResource(R.drawable.ic_vector_retweet);
+                            ivRetweet2.setImageResource(R.drawable.ic_vector_retweet);
                             tweet.isRetweet = true;
-                            tvRetweetCount.setText(String.valueOf(tweet.retweetCount+1));
+                            tvRetweetCount2.setText(String.valueOf(tweet.retweetCount+1));
                         }
 
                         @Override
@@ -126,16 +126,16 @@ public class TweetDetailsActivity extends AppCompatActivity {
             }
         });
 
-        ivLike.setOnClickListener(new View.OnClickListener() {
+        ivLike2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(tweet.isFavorite){
                     client.favoriteTweet(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            ivLike.setImageResource(R.drawable.ic_vector_heart_stroke);
+                            ivLike2.setImageResource(R.drawable.ic_vector_heart_stroke);
                             tweet.isFavorite = false;
-                            tvLikeCount.setText(String.valueOf(tweet.favoriteCount));
+                            tvLikeCount2.setText(String.valueOf(tweet.favoriteCount));
                         }
 
                         @Override
@@ -147,9 +147,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
                     client.favoriteTweet(new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
-                            ivLike.setImageResource(R.drawable.ic_vector_heart);
+                            ivLike2.setImageResource(R.drawable.ic_vector_heart);
                             tweet.isFavorite = true;
-                            tvLikeCount.setText(String.valueOf(tweet.favoriteCount+1));
+                            tvLikeCount2.setText(String.valueOf(tweet.favoriteCount+1));
                         }
 
                         @Override
@@ -164,13 +164,13 @@ public class TweetDetailsActivity extends AppCompatActivity {
         });
 
         int radius = 100; // corner radius, higher value = more rounded
-        Glide.with(TweetDetailsActivity.this).load(tweet.user.profileImageURL).transform(new RoundedCorners(radius)).override(Target.SIZE_ORIGINAL, 120).into(ivProfileImage);
+        Glide.with(TweetDetailsActivity.this).load(tweet.user.profileImageURL).transform(new RoundedCorners(radius)).override(Target.SIZE_ORIGINAL, 120).into(ivProfileImage2);
 
         if(!tweet.ImageURL.equals("No Image")){
-            ivImage.setVisibility(View.VISIBLE);
-            Glide.with(TweetDetailsActivity.this).load(tweet.ImageURL).into(ivImage);
+            ivImage2.setVisibility(View.VISIBLE);
+            Glide.with(TweetDetailsActivity.this).load(tweet.ImageURL).into(ivImage2);
         } else{
-            ivImage.setVisibility(View.GONE);
+            ivImage2.setVisibility(View.GONE);
         }
 
     }
