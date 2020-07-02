@@ -36,7 +36,7 @@ public class ReplyActivity extends AppCompatActivity {
         etReply = findViewById(R.id.etReply);
         btnReply = findViewById(R.id.btnReply);
 
-        etReply.setText(getIntent().getStringExtra("handle")+"\n");
+        etReply.setText("Replying to " + getIntent().getStringExtra("handle")+"\n");
         btnReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,5 +8,6 @@
     <string name="tweet">Tweet</string>
     <string name="what_s_happening">What\'s Happening?</string>
     <string name="reply">Reply</string>
+    <string name="tweet_your_reply">Tweet your reply</string>
 
 </resources>
